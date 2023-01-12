@@ -1,8 +1,10 @@
-const CARDGOTOBACK = -140
+const CARDGOTOBACK = -200
 const FIRST_CARD_SCALE = 1.2
 const SECOND_CARD_SCALE = 1.1
 const THIRD_CARD_SCALE = 1
 const MULTIPLE_SCALE = 0.1
+
+translateTitle()
 
 window.addEventListener("scroll", rotateCards)
 
@@ -27,7 +29,7 @@ function rotateCards() {
 let { width, left, y } = document
   .querySelector(".draggable")
   .getBoundingClientRect()
-console.log(y)
+
 let draggables = document.querySelectorAll(".draggable")
 
 draggables[0].style.transform = `rotate(-3deg) scale(${FIRST_CARD_SCALE})`
@@ -58,7 +60,6 @@ draggables.forEach((draggable) => {
   draggable.addEventListener("touchend", (event) => {
     console.log("start end")
     if (draggable.getAttribute("draggable") === "false") {
-      console.log("grrr")
       draggable.classList.remove("dragging")
       return
     }
@@ -78,7 +79,7 @@ draggables.forEach((draggable) => {
   })
 
   draggable.addEventListener("dragover", (event) => {
-    console.log("start over")
+    //console.log("start over")
     onDrag(event.clientX, draggable)
   })
 
@@ -93,6 +94,7 @@ function onDrag(mouseOfX, draggable) {
   draggable.style.transform = `translateX(${
     mouseOfX - left - width / 2
   }px) rotate(-2.5deg) scale(1.2)`
+  draggable.style.transition = `translateX 0.1s`
 }
 
 function LengthCardGoToBack(mouseOfX, draggable) {
@@ -100,7 +102,7 @@ function LengthCardGoToBack(mouseOfX, draggable) {
   if (draggingCard < CARDGOTOBACK) {
     shuffleCards(draggable)
   } else {
-    draggable.style.transform = `translateX(0px) rotate(-3.5deg)`
+    draggable.style.transform = `rotate(-3deg) scale(${FIRST_CARD_SCALE}`
   }
 }
 
@@ -146,4 +148,26 @@ function addElement(element) {
     element.style.visibility = `visible`
     element.style.transition = `all 1s`
   }, 500)
+}
+
+function translateTitle() {
+  setInterval(changeTitle, 2000)
+}
+
+function changeTitle() {
+  const title = document.querySelector("h1")
+  title.style.opacity = 0
+
+  setTimeout(() => {
+    let welcome = "Bienvenue,"
+    if (title.innerText === "Bienvenue,") {
+      welcome = "Welcome,"
+    }
+    if (title.innerText === "Welcome,") {
+      welcome = "Yōkoso,"
+    }
+
+    title.innerText = welcome
+    title.style.opacity = 1
+  }, 1000)
 }
