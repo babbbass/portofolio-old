@@ -155,7 +155,7 @@ function translateTitle() {
 }
 
 function changeTitle() {
-  const title = document.querySelector("h1")
+  const title = document.querySelector(".welcome")
   title.style.opacity = 0
 
   setTimeout(() => {
